@@ -1,0 +1,36 @@
+
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+.env
+
+logs/
+*.log
+*.log.*
+
+
+/dist/
+/build/
+/coverage/
+
+.vscode/
+.idea/
+
+
+.DS_Store       # macOS
+Thumbs.db       # Windows
+
+.env.local
+.env.development
+.env.production
+.env.test
+
+test-coverage/
+*.tgz
+
+docker-compose.override.yml
+Dockerfile
+*.swp
+*.swo
