@@ -20,3 +20,13 @@ export const userRegister = async (req, res) => {
     res.status(500).json({ message: "Server error!" });
   }
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT id, name, email, role FROM users`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "GetUser error!" });
+  }
+};
