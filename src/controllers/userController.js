@@ -12,7 +12,7 @@ export const userRegister = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
       `INSERT INTO users(name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *`,
-      [name, email, password, role || "patient"]
+      [name, email, hashedPassword, role || "patient"]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
