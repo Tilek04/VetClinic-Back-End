@@ -7,7 +7,7 @@ const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.PG_DATABASE_URL,
-  ssl: { rejectUnauthorized: false }, 
+  ssl: { rejectUnauthorized: false },
 });
 
 const createTables = async () => {
