@@ -8,6 +8,11 @@ dotenv.config();
 export const userRegister = async (req, res) => {
   const { name, email, password, role } = req.body;
 
+  const validRoles = ["patient", "doctor", "manager", "admin"];
+  if (!validRoles.includes(role)) {
+    return res.status(400).json({ message: "Invalid role!" });
+  }
+
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Fill in all fields!" });
   }
