@@ -8,7 +8,7 @@ dotenv.config();
 export const userRegister = async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  const validRoles = ["patient", "doctor", "manager", "admin"];
+  const validRoles = ["doctor", "manager", "admin"];
   if (!validRoles.includes(role)) {
     return res.status(400).json({ message: "Invalid role!" });
   }
@@ -72,6 +72,33 @@ export const userLogin = async (req, res) => {
       { expiresIn: "15d" }
     );
     return res.json({ user, token });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Server error!" });
+  }
+};
+
+export const confirmRole = async (req, res) => {
+  const { userId, role } = req.body;
+
+  const validRoles = ["doctor", "manager", "admin"];
+  if (!validRoles.includes(role)) {
+    return res.status(400).json({ message: "Invalid role!" });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE users SET role = $1, verified = true WHERE id = $2 RETURNING *`,
+      [role, userId]
+    );
+
+    const user = result.rows[0];
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    return res.status(200).json({ user });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: "Server error!" });
