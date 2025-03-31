@@ -106,11 +106,15 @@ export const confirmRole = async (req, res) => {
 };
 
 export const getUsers = async (req, res) => {
+  console.log("Attempting to fetch users...");
+
   try {
+    console.log("Executing database query...");
     const result = await pool.query(`SELECT id, name, email, role FROM users`);
+    console.log("Database query successful, result:", result.rows);
     res.json(result.rows);
   } catch (error) {
-    console.error(error.message);
+    console.error("Error during database query:", error.message);
     res.status(500).json({ message: "GetUser error!" });
   }
 };
