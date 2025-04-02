@@ -105,13 +105,25 @@ export const confirmRole = async (req, res) => {
   }
 };
 
+export const getEmployees = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, name, email, role, verified FROM users WHERE role IN ('doctor', 'manager', 'admin')`
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Server error!" });
+  }
+};
+
 export const getUsers = async (req, res) => {
   console.log("Attempting to fetch users...");
 
   try {
     console.log("Executing database query...");
     const result = await pool.query(`SELECT id, name, email, role FROM users`);
-    console.log("Database query successful, result:", result.rows);
+    console.log("Database query successful, result:");
     res.json(result.rows);
   } catch (error) {
     console.error("Error during database query:", error.message);
