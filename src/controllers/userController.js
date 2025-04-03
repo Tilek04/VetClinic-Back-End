@@ -123,6 +123,10 @@ export const getUserById = async (req, res) => {
     const userId = req.user.id;
     const userRole = req.user.role;
 
+    if (userRole !== "admin" && userId !== Number(id)) {
+      return res.status(403).json({ message: "Access denied!" });
+    }
+
     const result = await pool.query(
       `
         SELECT id, name, email, role, verified FROM users WHERE id = $1
