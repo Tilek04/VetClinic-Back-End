@@ -2,6 +2,7 @@ import express from "express";
 import {
   confirmRole,
   getEmployees,
+  getUserById,
   getUsers,
   userLogin,
   userRegister,
@@ -16,5 +17,6 @@ router.get("/", getUsers);
 router.post("/login", userLogin);
 router.post("/confirm-role", authMiddleware, isAdmin, confirmRole);
 router.get("/employees", authMiddleware, isAdmin, getEmployees);
+router.get("/:id", authMiddleware, getUserById);
 
 export default router;
